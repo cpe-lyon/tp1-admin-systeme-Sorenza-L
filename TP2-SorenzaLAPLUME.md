@@ -73,10 +73,10 @@ Ce qui m'affiche **$HOME = /home/slapl**
 
 
 >!/bin/bash
->
+
 >#Variables
 >PASSWORD="qwerty"
->
+
 >#Programme principal
 >echo "Saisir un mot de passe : "
 >read -s mdp
@@ -85,7 +85,7 @@ Ce qui m'affiche **$HOME = /home/slapl**
 >else 
 >   echo "Le mot de passe est incorrect"
 >fi
->
+
 >#fin du script
 
 
@@ -132,9 +132,9 @@ Ce qui m'affiche **$HOME = /home/slapl**
 
 >#!/bin/bash
 >#Mon script username
->
+
 >valide=$(cat /etc/passwd | grep - c slapl)
->
+
 >if [ $valide = 0 ]; then
 >    echo "$valide Utilisateur valide"
 > [ -z "nom_user" ]; then
