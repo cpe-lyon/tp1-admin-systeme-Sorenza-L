@@ -71,58 +71,58 @@ Ce qui m'affiche **$HOME = /home/slapl**
 
 **Écrivez un script testpwd.sh qui demande de saisir un mot de passe et vérifie s’il correspond ou non au contenu d’une variable PASSWORD dont le contenu est codé en dur dans le script. Le mot de passe saisi par l’utilisateur ne doit pas s’afficher.**
 
-<prep>
-#!/bin/bash
 
-#Variables
-PASSWORD="qwerty"
+>!/bin/bash
+>
+>#Variables
+>PASSWORD="qwerty"
+>
+>#Programme principal
+>echo "Saisir un mot de passe : "
+>read -s mdp
+>if [$PASSWORD = $mdp]; then
+>   echo "Le mot de passe est correct"
+>else 
+>   echo "Le mot de passe est incorrect"
+>fi
+>
+>#fin du script
 
-#Programme principal
-echo "Saisir un mot de passe : "
-read -s mdp
-if [$PASSWORD = $mdp]; then
-   echo "Le mot de passe est correct"
-else 
-   echo "Le mot de passe est incorrect"
-fi
 
-#fin du script
-
-</prep>
 
 ## Exercice 3. Expressions rationnelles
 
 **Ecrivez un script qui prend un paramètre et utilise la fonction suivante pour vérifier que ce paramètre est un nombre réel :**
-function is_number()
-{
-re='^[+-]?[0-9]+([.][0-9]+)?$'
-if ! [[ $1 =~ $re ]] ; then
-return 1
-else
-return 0
-fi
-}
-<prep>
-#!/bin/bash
-#Déclaration de ma fonction
-function is_number()
-{
-re='^[+-]?[0-9]+([.][0-9]+)?$'
-if ! [[ $1 =~ $re ]] ; then
-return 1
-else
-return 0
-fi
-}
-#Appel de ma fonction
-is_number $1
-if [ $? = 0]; then
-       echo "$1 est un nombre réel"
-else 
-       echo "$1 n'est pas un nombre réel"
-fi
-#Fin du script
-</prep>
+**function is_number()**
+**{**
+**re='^[+-]?[0-9]+([.][0-9]+)?$**'
+**if ! [[ $1 =~ $re ]] ; then**
+**return 1**
+**else**
+**return 0**
+**fi**
+**}**
+
+>#!/bin/bash
+>#Déclaration de ma fonction
+>function is_number()
+>{
+>re='^[+-]?[0-9]+([.][0-9]+)?$'
+>if ! [[ $1 =~ $re ]] ; then
+>   return 1
+>else
+>   return 0
+>fi
+>}
+>#Appel de ma fonction
+>is_number $1
+>if [ $? = 0]; then
+>       echo "$1 est un nombre réel"
+>else 
+>       echo "$1 n'est pas un nombre réel"
+>fi
+>#Fin du script
+
 
 ***Si je lance mon script avec is_number 2 cela m'affiche 2 est un nombre réel. Quand je remplace le paramètre par p je peut lire, p n'est pas un nombre réel.***
 
@@ -130,23 +130,22 @@ fi
 
 **Écrivez un script qui vérifie l’existence d’un utilisateur dont le nom est donné en paramètre du script. Si le script est appelé sans nom d’utilisateur, il affiche le message : ”Utilisation : nom_du_script nom_utilisateur”, où nom_du_script est le nom de votre script récupéré automatiquement (si vous changez le nom de votre script, le message doit changer automatiquement)**
 
-<prep>
-#!/bin/bash
-#Mon script username
+>#!/bin/bash
+>#Mon script username
+>
+>valide=$(cat /etc/passwd | grep - c slapl)
+>
+>if [ $valide = 0 ]; then
+>    echo "$valide Utilisateur valide"
+> [ -z "nom_user" ]; then
+>    echo "Utilisation : $0 nom_utilisateur"
+>else
+>    echo "Utilisateur invalide"
 
-valide=$(cat /etc/passwd | grep - c slapl)
+>fi
 
-if [ $valide = 0 ]; then
-    echo "$valide Utilisateur valide"
-elif [ -z "nom_user" ]; then
-    echo "Utilisation : $0 nom_utilisateur"
-else
-    echo "Utilisateur invalide"
+>#Fin du script
 
-fi
-
-#Fin du script
-</prep>
 
 > ./username.sh
 renvoie nom_utlisateur. 
@@ -160,18 +159,34 @@ ce qui me renvoie Utilisateur invalide.
 Écrivez un programme qui calcule la factorielle d’un entier naturel passé en paramètre (on supposera que
 l’utilisateur saisit toujours un entier naturel).
 
-<prep>
-#!/bin/bash
- fact()
- {
-     n=$1
-     if [ $n = 0 ]; then
-        echo 1
-    else
-        echo $(( n * `fact $((n-1))))`
-    fi
- }
- echo `fact $1`
- 
- #Fin du script
-</prep>
+
+>#!/bin/bash
+> fact()
+> {
+>    n=$1
+>     if [ $n = 0 ]; then
+>        echo 1
+>    else
+>        echo $(( n * `fact $((n-1))))`
+>    fi
+> }
+>echo `fact $1`
+>
+> #Fin du script
+
+
+## Exercice 6. Le juste prix
+Écrivez un script qui génère un nombre aléatoire entre 1 et 1000 et demande à l’utilisateur de le deviner.
+Le programme écrira ”C’est plus !”, ”C’est moins !” ou ”Gagné !” selon les cas (vous utiliserez $RANDOM).
+
+## Exercice 7. Statistiques
+
+1. Écrivez un script qui prend en paramètres trois entiers (entre -100 et +100) et affiche le min, le max
+et la moyenne. Vous pouvez réutiliser la fonction de l’exercice 3 pour vous assurer que les paramètres
+sont bien des entiers.
+2. Généralisez le programme à un nombre quelconque de paramètres (pensez à SHIFT)
+3. Modifiez votre programme pour que les notes ne soient plus données en paramètres, mais saisies et
+stockées au fur et à mesure dans un tableau.
+
+## Exercice 8. Pour les plus rapides
+Écrivez un script qui affiche les combinaisons possibles de couleurs 
