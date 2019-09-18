@@ -183,17 +183,40 @@ echo `fact $1`
 </pre>
 
 ## Exercice 6. Le juste prix
-Écrivez un script qui génère un nombre aléatoire entre 1 et 1000 et demande à l’utilisateur de le deviner.
-Le programme écrira ”C’est plus !”, ”C’est moins !” ou ”Gagné !” selon les cas (vous utiliserez $RANDOM).
+**Écrivez un script qui génère un nombre aléatoire entre 1 et 1000 et demande à l’utilisateur de le deviner.
+Le programme écrira ”C’est plus !”, ”C’est moins !” ou ”Gagné !” selon les cas (vous utiliserez $RANDOM).**
 
-## Exercice 7. Statistiques
+<pre>
+#!/bin/bash
+#Mon script juste_prix
 
-1. Écrivez un script qui prend en paramètres trois entiers (entre -100 et +100) et affiche le min, le max
-et la moyenne. Vous pouvez réutiliser la fonction de l’exercice 3 pour vous assurer que les paramètres
-sont bien des entiers.
-2. Généralisez le programme à un nombre quelconque de paramètres (pensez à SHIFT)
-3. Modifiez votre programme pour que les notes ne soient plus données en paramètres, mais saisies et
-stockées au fur et à mesure dans un tableau.
+echelle=1000
+nombre=$RANDOM
+let "nombre %= $echelle"
+echo "Saisissez un nombre compris entre 1 et 1000: "
+read nb
 
-## Exercice 8. Pour les plus rapides
-Écrivez un script qui affiche les combinaisons possibles de couleurs 
+while [ $nb -ne $nombre ]
+do
+
+    if [ $nb -lt $nombre ]; then
+        echo "C'est plus !"
+
+    elif [ "$nb -gt $nombre" ]; then
+        echo "C'est moins !"
+    fi
+
+        echo -e "\n Saisir un autre nombre :"
+        read new
+        nb=new
+done
+
+if [ $nb -eq $nombre ]; then
+    echo "Gagné !"
+fi
+
+# Fin du script
+
+</pre>
+
+
