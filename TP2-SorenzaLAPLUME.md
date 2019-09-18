@@ -26,8 +26,10 @@ La variable ***SHELL*** détermine l'interpréteur de commande préféré de l'u
 
 Pour créer la variable locale j'utilise les commandes suivantes :
 > MY_VAR="LAPLUME"; printenv MY_VAR
+
 La commande printenv MY_VAR m'affiche LAPLUME. Lorsque je teste la commande :
 > echo MY_VAR
+
 je vois apparaitre LAPLUME.
 
 **5. Tapez ensuite la commande bash. Que fait-elle ? La variable MY_VAR existe-t-elle ? Expliquez. A la fin de cette question, tapez la commande exit pour revenir dans votre session initiale.**
@@ -71,24 +73,24 @@ Ce qui m'affiche **$HOME = /home/slapl**
 
 **Écrivez un script testpwd.sh qui demande de saisir un mot de passe et vérifie s’il correspond ou non au contenu d’une variable PASSWORD dont le contenu est codé en dur dans le script. Le mot de passe saisi par l’utilisateur ne doit pas s’afficher.**
 
+<pre>
+#!/bin/bash
 
->!/bin/bash
+#Variables
+PASSWORD="qwerty"
 
->#Variables
->PASSWORD="qwerty"
+#Programme principal
+echo "Saisir un mot de passe : "
+read -s mdp
+if [$PASSWORD = $mdp]; then
+   echo "Le mot de passe est correct"
+else 
+   echo "Le mot de passe est incorrect"
+fi
 
->#Programme principal
->echo "Saisir un mot de passe : "
->read -s mdp
->if [$PASSWORD = $mdp]; then
->   echo "Le mot de passe est correct"
->else 
->   echo "Le mot de passe est incorrect"
->fi
+#fin du script
 
->#fin du script
-
-
+</pre>
 
 ## Exercice 3. Expressions rationnelles
 
@@ -103,26 +105,30 @@ Ce qui m'affiche **$HOME = /home/slapl**
 **fi**
 **}**
 
->#!/bin/bash
->#Déclaration de ma fonction
->function is_number()
->{
->re='^[+-]?[0-9]+([.][0-9]+)?$'
->if ! [[ $1 =~ $re ]] ; then
->   return 1
->else
->   return 0
->fi
->}
->#Appel de ma fonction
->is_number $1
->if [ $? = 0]; then
->       echo "$1 est un nombre réel"
->else 
->       echo "$1 n'est pas un nombre réel"
->fi
->#Fin du script
+<pre>
+#!/bin/bash
+#Déclaration de ma fonction
 
+function is_number()
+{
+    re='^[+-]?[0-9]+([.][0-9]+)?$'
+    if ! [[ $1 =~ $re ]] ; then
+        return 1
+    else
+        return 0
+fi
+}
+
+#Appel de ma fonction
+is_number $1
+if [ $? = 0]; then
+       echo "$1 est un nombre réel"
+else 
+       echo "$1 n'est pas un nombre réel"
+fi
+
+#Fin du script
+</pre>
 
 ***Si je lance mon script avec is_number 2 cela m'affiche 2 est un nombre réel. Quand je remplace le paramètre par p je peut lire, p n'est pas un nombre réel.***
 
@@ -130,22 +136,23 @@ Ce qui m'affiche **$HOME = /home/slapl**
 
 **Écrivez un script qui vérifie l’existence d’un utilisateur dont le nom est donné en paramètre du script. Si le script est appelé sans nom d’utilisateur, il affiche le message : ”Utilisation : nom_du_script nom_utilisateur”, où nom_du_script est le nom de votre script récupéré automatiquement (si vous changez le nom de votre script, le message doit changer automatiquement)**
 
->#!/bin/bash
->#Mon script username
+<pre>
+#!/bin/bash
+#Mon script username
 
->valide=$(cat /etc/passwd | grep - c slapl)
+valide=$(cat /etc/passwd | grep - c slapl)
 
->if [ $valide = 0 ]; then
->    echo "$valide Utilisateur valide"
-> [ -z "nom_user" ]; then
->    echo "Utilisation : $0 nom_utilisateur"
->else
->    echo "Utilisateur invalide"
+if [ $valide = 0 ]; then
+    echo "$valide Utilisateur valide"
+ [ -z "nom_user" ]; then
+    echo "Utilisation : $0 nom_utilisateur"
+else
+    echo "Utilisateur invalide"
 
->fi
+fi
 
->#Fin du script
-
+#Fin du script
+</pre>
 
 > ./username.sh
 renvoie nom_utlisateur. 
@@ -159,21 +166,21 @@ ce qui me renvoie Utilisateur invalide.
 Écrivez un programme qui calcule la factorielle d’un entier naturel passé en paramètre (on supposera que
 l’utilisateur saisit toujours un entier naturel).
 
+<pre>
+#!/bin/bash
+ fact()
+ {
+    n=$1
+     if [ $n = 0 ]; then
+        echo 1
+    else
+        echo $(( n * `fact $((n-1))`))
+    fi
+ }
+echo `fact $1`
 
->#!/bin/bash
-> fact()
-> {
->    n=$1
->     if [ $n = 0 ]; then
->        echo 1
->    else
->        echo $(( n * `fact $((n-1))))`
->    fi
-> }
->echo `fact $1`
->
-> #Fin du script
-
+#Fin du script
+</pre>
 
 ## Exercice 6. Le juste prix
 Écrivez un script qui génère un nombre aléatoire entre 1 et 1000 et demande à l’utilisateur de le deviner.
